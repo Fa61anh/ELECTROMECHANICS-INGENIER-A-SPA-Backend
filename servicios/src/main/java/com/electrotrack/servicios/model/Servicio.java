@@ -1,19 +1,44 @@
 package com.electrotrack.servicios.model;
 
+import jakarta.persistence.*;
+import java.util.UUID;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "servicios", schema = "servicios")
 public class Servicio {
 
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(nullable = false, length = 150)
     private String titulo;
+
+    @Column(length = 150)
+    private String cliente;
+
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
+
+    @Column(nullable = false, length = 255)
     private String direccion;
-    private Long tecnicoId;
+
+    @Column(name = "fecha_programada")
+    private LocalDateTime fechaProgramada;
+
+    @Column(name = "tecnico_id")
+    private UUID tecnicoId;
+
+    @Column(nullable = false, length = 30)
     private String estado;
 
     public Servicio() {
     }
 
-    public Servicio(Long id, String titulo, String descripcion,
-                    String direccion, Long tecnicoId, String estado) {
+    public Servicio(UUID id, String titulo, String descripcion,
+                    String direccion, UUID tecnicoId, String estado) {
+
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -22,11 +47,26 @@ public class Servicio {
         this.estado = estado;
     }
 
-    public Long getId() {
+    public Servicio(UUID id, String titulo, String cliente,
+                    String descripcion, String direccion,
+                    LocalDateTime fechaProgramada,
+                    UUID tecnicoId, String estado) {
+
+        this.id = id;
+        this.titulo = titulo;
+        this.cliente = cliente;
+        this.descripcion = descripcion;
+        this.direccion = direccion;
+        this.fechaProgramada = fechaProgramada;
+        this.tecnicoId = tecnicoId;
+        this.estado = estado;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -36,6 +76,14 @@ public class Servicio {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
     public String getDescripcion() {
@@ -54,11 +102,19 @@ public class Servicio {
         this.direccion = direccion;
     }
 
-    public Long getTecnicoId() {
+    public LocalDateTime getFechaProgramada() {
+        return fechaProgramada;
+    }
+
+    public void setFechaProgramada(LocalDateTime fechaProgramada) {
+        this.fechaProgramada = fechaProgramada;
+    }
+
+    public UUID getTecnicoId() {
         return tecnicoId;
     }
 
-    public void setTecnicoId(Long tecnicoId) {
+    public void setTecnicoId(UUID tecnicoId) {
         this.tecnicoId = tecnicoId;
     }
 

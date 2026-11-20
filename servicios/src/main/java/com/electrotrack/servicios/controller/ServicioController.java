@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/servicios")
@@ -24,7 +25,7 @@ public class ServicioController {
     }
 
     @GetMapping("/{id}")
-    public Servicio buscarPorId(@PathVariable Long id) {
+    public Servicio buscarPorId(@PathVariable UUID id) {
         return servicioService.buscarPorId(id);
     }
 
@@ -36,23 +37,27 @@ public class ServicioController {
 
     @PutMapping("/{id}/asignar")
     public Servicio asignarTecnico(
-            @PathVariable Long id,
-            @RequestBody Map<String, Long> datos) {
+            @PathVariable UUID id,
+            @RequestBody Map<String, UUID> datos) {
 
-        return servicioService.asignarTecnico(id, datos.get("tecnicoId"));
+        return servicioService.asignarTecnico(
+            id, datos.get("tecnicoId")
+        );
     }
 
     @PatchMapping("/{id}/estado")
     public Servicio actualizarEstado(
-            @PathVariable Long id,
+            @PathVariable UUID id,
             @RequestBody Map<String, String> datos) {
 
-        return servicioService.actualizarEstado(id, datos.get("estado"));
+        return servicioService.actualizarEstado(
+            id, datos.get("estado")
+        );
     }
-    
+
     @PutMapping("/{id}")
     public Servicio actualizarServicio(
-            @PathVariable Long id,
+            @PathVariable UUID id,
             @RequestBody Servicio servicio) {
 
         return servicioService.actualizarServicio(id, servicio);
@@ -60,8 +65,7 @@ public class ServicioController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminarServicio(@PathVariable Long id) {
-
+    public void eliminarServicio(@PathVariable UUID id) {
         servicioService.eliminarServicio(id);
     }
 }
